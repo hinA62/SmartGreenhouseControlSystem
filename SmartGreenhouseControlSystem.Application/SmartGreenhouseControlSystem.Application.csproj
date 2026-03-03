@@ -14,7 +14,6 @@
       <Folder Include="Commands\ChangeTresholdCommand\" />
       <Folder Include="Exceptions\" />
       <Folder Include="Queries\" />
-      <Folder Include="Validators\" />
     </ItemGroup>
 
     <ItemGroup>

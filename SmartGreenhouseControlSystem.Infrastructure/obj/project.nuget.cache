@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "iBYLuZm9rN8=",
+  "dgSpecHash": "z/txzFfjAGw=",
   "success": true,
-  "projectFilePath": "D:\\Documents\\licenta\\SmartGrennhouseControlSystem\\SmartGreenhouseControlSystem.Infrastructure\\SmartGreenhouseControlSystem.Infrastructure.csproj",
+  "projectFilePath": "D:\\Documents\\Licenta\\SmartGreenhouseControlSystem\\SmartGreenhouseControlSystem.Infrastructure\\SmartGreenhouseControlSystem.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Veronica\\.nuget\\packages\\fluentvalidation\\12.1.1\\fluentvalidation.12.1.1.nupkg.sha512",
     "C:\\Users\\Veronica\\.nuget\\packages\\mediatr\\14.0.0\\mediatr.14.0.0.nupkg.sha512",

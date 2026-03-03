@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Oulh0SwPfZ0=",
+  "dgSpecHash": "rXHgeVkoAjM=",
   "success": true,
-  "projectFilePath": "D:\\Documents\\licenta\\SmartGrennhouseControlSystem\\SmartGreenhouseControlSystem.API\\SmartGreenhouseControlSystem.API.csproj",
+  "projectFilePath": "D:\\Documents\\Licenta\\SmartGreenhouseControlSystem\\SmartGreenhouseControlSystem.API\\SmartGreenhouseControlSystem.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Veronica\\.nuget\\packages\\fluentvalidation\\12.1.1\\fluentvalidation.12.1.1.nupkg.sha512",
     "C:\\Users\\Veronica\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

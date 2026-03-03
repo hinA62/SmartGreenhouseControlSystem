@@ -4,12 +4,12 @@ using SmartGreenhouseControlSystem.Application.Abstractions;
 
 namespace SmartGreenhouseControlSystem.Application.Commands.RegisterTelemetryDataCommand;
 
-public class RegisterTelemetryDataCommandHandler(IDeviceRepository deviceRepository)
+public class RegisterTelemetryDataCommandHandler(IDevicesRepository devicesRepository)
     : IRequestHandler<RegisterTelemetryDataCommand, Guid>
 {
     public Task<Guid> Handle(Commands.RegisterTelemetryDataCommand.RegisterTelemetryDataCommand request, CancellationToken cancellationToken)
     {
-        var device = deviceRepository.FindDeviceAsync(request.DeviceId, cancellationToken);
+        var device = devicesRepository.FindDeviceAsync(request.DeviceId, cancellationToken);
         if (device is null)
         {
             throw new Exception("Device not found.");
@@ -21,7 +21,7 @@ public class RegisterTelemetryDataCommandHandler(IDeviceRepository deviceReposit
             request.AirHumidity,
             request.SoilHumidity);
         
-        deviceRepository.AddTelemetryAsync(telemetry, cancellationToken);
+        devicesRepository.AddTelemetryAsync(telemetry, cancellationToken);
         return Task.FromResult(telemetry.Id);
     }
 }

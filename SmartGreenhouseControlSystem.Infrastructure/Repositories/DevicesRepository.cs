@@ -5,7 +5,7 @@ using SmartGreenhouseControlSystem.Application.Abstractions;
 
 namespace Infrastructure.Repositories;
 
-public class DevicesRepository(SGCSystemDbContext context) : IDeviceRepository
+public class DevicesRepository(SGCSystemDbContext context) : IDevicesRepository
 {
     private readonly SGCSystemDbContext _context = context;
 
@@ -29,6 +29,11 @@ public class DevicesRepository(SGCSystemDbContext context) : IDeviceRepository
     public Task AddTelemetryAsync(Telemetry telemetry, CancellationToken cancellationToken = default)
     {
         _context.Telemetries.Add(telemetry);
+        return _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public Task SaveChangesAsync(CancellationToken cancellationToken)
+    {
         return _context.SaveChangesAsync(cancellationToken);
     }
 }

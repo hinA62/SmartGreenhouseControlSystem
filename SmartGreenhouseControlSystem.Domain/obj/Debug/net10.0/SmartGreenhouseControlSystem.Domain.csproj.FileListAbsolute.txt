@@ -9,3 +9,15 @@ D:\Documents\Licenta\SmartGrennhouseControlSystem\SmartGreenhouseControlSystem.D
 D:\Documents\Licenta\SmartGrennhouseControlSystem\SmartGreenhouseControlSystem.Domain\obj\Debug\net10.0\refint\SmartGreenhouseControlSystem.Domain.dll
 D:\Documents\Licenta\SmartGrennhouseControlSystem\SmartGreenhouseControlSystem.Domain\obj\Debug\net10.0\SmartGreenhouseControlSystem.Domain.pdb
 D:\Documents\Licenta\SmartGrennhouseControlSystem\SmartGreenhouseControlSystem.Domain\obj\Debug\net10.0\ref\SmartGreenhouseControlSystem.Domain.dll
+D:\Documents\Licenta\SmartGreenhouseControlSystem\SmartGreenhouseControlSystem.Domain\bin\Debug\net10.0\SmartGreenhouseControlSystem.Domain.deps.json
+D:\Documents\Licenta\SmartGreenhouseControlSystem\SmartGreenhouseControlSystem.Domain\bin\Debug\net10.0\SmartGreenhouseControlSystem.Domain.dll
+D:\Documents\Licenta\SmartGreenhouseControlSystem\SmartGreenhouseControlSystem.Domain\bin\Debug\net10.0\SmartGreenhouseControlSystem.Domain.pdb
+D:\Documents\Licenta\SmartGreenhouseControlSystem\SmartGreenhouseControlSystem.Domain\obj\Debug\net10.0\SmartGreenhouseControlSystem.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Documents\Licenta\SmartGreenhouseControlSystem\SmartGreenhouseControlSystem.Domain\obj\Debug\net10.0\SmartGreenhouseControlSystem.Domain.AssemblyInfoInputs.cache
+D:\Documents\Licenta\SmartGreenhouseControlSystem\SmartGreenhouseControlSystem.Domain\obj\Debug\net10.0\SmartGreenhouseControlSystem.Domain.AssemblyInfo.cs
+D:\Documents\Licenta\SmartGreenhouseControlSystem\SmartGreenhouseControlSystem.Domain\obj\Debug\net10.0\SmartGreenhouseControlSystem.Domain.csproj.CoreCompileInputs.cache
+D:\Documents\Licenta\SmartGreenhouseControlSystem\SmartGreenhouseControlSystem.Domain\obj\Debug\net10.0\SmartGreenhouseControlSystem.Domain.sourcelink.json
+D:\Documents\Licenta\SmartGreenhouseControlSystem\SmartGreenhouseControlSystem.Domain\obj\Debug\net10.0\SmartGreenhouseControlSystem.Domain.dll
+D:\Documents\Licenta\SmartGreenhouseControlSystem\SmartGreenhouseControlSystem.Domain\obj\Debug\net10.0\refint\SmartGreenhouseControlSystem.Domain.dll
+D:\Documents\Licenta\SmartGreenhouseControlSystem\SmartGreenhouseControlSystem.Domain\obj\Debug\net10.0\SmartGreenhouseControlSystem.Domain.pdb
+D:\Documents\Licenta\SmartGreenhouseControlSystem\SmartGreenhouseControlSystem.Domain\obj\Debug\net10.0\ref\SmartGreenhouseControlSystem.Domain.dll

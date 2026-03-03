@@ -19,6 +19,12 @@ public class Device
     public Guid SystemId { get; private set; } = Guid.Empty;
     public List<Sensor> Sensors { get; private set; } = [];
     
+    public double TargetTemperature { get; private set; } = 0;
+    public double CurrentTemperature { get; private set; } = 0;
+    public double TargetAirHumidity { get; private set; } = 0;  
+    public double CurrentAirHumidity { get; private set; } = 0;
+    public double TargetSoilHumidity { get; private set; } = 0;
+    public double CurrentSoilHumidity { get; private set; } = 0;
     
     public void BindSensorToDevice(Sensor sensor)
     {
@@ -30,4 +36,21 @@ public class Device
     {
         Sensors.Remove(sensor);
     }
+
+    public void ChangeTemperatureThreshold(double requestTemperature)
+    {
+        TargetTemperature = requestTemperature;
+    }
+    
+    public void ChangeAirHumidityThreshold(double requestAirHumidity)
+    {
+        TargetAirHumidity = requestAirHumidity;
+    }
+    
+    public void ChangeSoilHumidityThreshold(double requestSoilHumidity)
+    {
+        TargetSoilHumidity = requestSoilHumidity;
+    }
+    
+    
 }

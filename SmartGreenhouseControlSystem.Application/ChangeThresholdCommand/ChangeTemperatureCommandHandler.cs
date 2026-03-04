@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using SmartGreenhouseControlSystem.Application.Abstractions;
+using SmartGreenhouseControlSystem.Application.Exceptions;
 
 namespace SmartGreenhouseControlSystem.Application.ChangeThresholdCommand;
 
@@ -11,7 +12,7 @@ public class ChangeTemperatureCommandHandler(IDevicesRepository devicesRepositor
         var device = await devicesRepository.FindDeviceAsync(request.DeviceId, cancellationToken);
         if (device is null)
         {
-            throw new Exception("Device not found");
+            throw new DeviceNotFoundException(request.DeviceId);
         }
 
         device.ChangeTemperatureThreshold(request.Temperature);

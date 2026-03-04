@@ -1,6 +1,7 @@
 ﻿using Domain;
 using MediatR;
 using SmartGreenhouseControlSystem.Application.Abstractions;
+using SmartGreenhouseControlSystem.Application.Exceptions;
 
 namespace SmartGreenhouseControlSystem.Application.Commands.RegisterTelemetryDataCommand;
 
@@ -12,7 +13,7 @@ public class RegisterTelemetryDataCommandHandler(IDevicesRepository devicesRepos
         var device = devicesRepository.FindDeviceAsync(request.DeviceId, cancellationToken);
         if (device is null)
         {
-            throw new Exception("Device not found.");
+            throw new DeviceNotFoundException(request.DeviceId);
         }
 
         var telemetry = Telemetry.CreateTelemetry(

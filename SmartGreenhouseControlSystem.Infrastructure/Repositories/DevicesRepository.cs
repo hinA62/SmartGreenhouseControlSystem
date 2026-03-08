@@ -5,9 +5,9 @@ using SmartGreenhouseControlSystem.Application.Abstractions;
 
 namespace Infrastructure.Repositories;
 
-public class DevicesRepository(SGCSystemDbContext context) : IDevicesRepository
+public class DevicesRepository(SgcSystemDbContext context) : IDevicesRepository
 {
-    private readonly SGCSystemDbContext _context = context;
+    private readonly SgcSystemDbContext _context = context;
 
     
     public async Task AddDeviceAsync(Device device, CancellationToken cancellationToken = default)

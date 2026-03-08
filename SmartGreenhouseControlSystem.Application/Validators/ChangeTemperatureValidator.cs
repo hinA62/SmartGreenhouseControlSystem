@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using SmartGreenhouseControlSystem.Application.ChangeThresholdCommand;
+using SmartGreenhouseControlSystem.Application.Commands.ChangeThresholdCommand;
 
 namespace SmartGreenhouseControlSystem.Application.Validators;
 
@@ -7,7 +7,7 @@ public class ChangeTemperatureValidator : AbstractValidator<ChangeTemperatureCom
 {
     public ChangeTemperatureValidator()
     {
-        RuleFor(x => x.DeviceId).NotNull().WithMessage("Device ID is required.");
+        RuleFor(x => x.DeviceId).NotEmpty().WithMessage("Device ID is required.");
         
         RuleFor(x => x.Temperature)
             .InclusiveBetween(-20, 35)

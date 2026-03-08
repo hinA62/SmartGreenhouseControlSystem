@@ -2,6 +2,14 @@
 
 public class Telemetry
 {
+    public Guid Id { get; private set; } = Guid.NewGuid();
+    public Guid DeviceId { get; private set; } = Guid.Empty;
+    public DateTime Timestamp { get; private set; } = DateTime.Now;
+    
+    public double Temperature { get; private set; }
+    public double AirHumidity { get; private set; }
+    public double SoilHumidity { get; private set; }
+    
     private Telemetry() { }
 
     public static Telemetry CreateTelemetry(Guid deviceId, double temperature, double airHumidity, double soilHumidity)
@@ -16,14 +24,6 @@ public class Telemetry
             SoilHumidity = soilHumidity
         };
     }
-    
-    public Guid Id { get; private set; } = Guid.NewGuid();
-    public Guid DeviceId { get; private set; } = Guid.Empty;
-    public DateTime Timestamp { get; private set; } = DateTime.Now;
-    
-    public double Temperature { get; private set; } = 0;
-    public double AirHumidity { get; private set; } = 0;
-    public double SoilHumidity { get; private set; } = 0;
     
     public void UpdateTelemetry(double temperature, double airHumidity, double soilHumidity)
     {

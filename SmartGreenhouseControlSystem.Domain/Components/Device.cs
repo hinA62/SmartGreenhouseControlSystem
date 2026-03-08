@@ -2,6 +2,18 @@
 
 public class Device
 {
+    public Guid Id { get; private set; } = Guid.NewGuid();
+    public string Name { get; private set; } = string.Empty;
+    public Guid SystemId { get; private set; } = Guid.Empty;
+    public List<Sensor> Sensors { get; private set; } = [];
+    
+    public double TargetTemperature { get; private set; }
+    public double CurrentTemperature { get; private set; }
+    public double TargetAirHumidity { get; private set; }  
+    public double CurrentAirHumidity { get; private set; }
+    public double TargetSoilHumidity { get; private set; }
+    public double CurrentSoilHumidity { get; private set; }
+
     private Device() { }
 
     public  static Device AddDeviceToSystem(string name, Guid systemId)
@@ -10,22 +22,8 @@ public class Device
         {
             Name = name,
             SystemId = systemId,
-            Sensors = []
         };
     }
-    
-    public Guid Id { get; private set; } = Guid.NewGuid();
-    public string Name { get; private set; } = string.Empty;
-    public Guid SystemId { get; private set; } = Guid.Empty;
-    public List<Sensor> Sensors { get; private set; } = [];
-    
-    public double TargetTemperature { get; private set; } = 0;
-    public double CurrentTemperature { get; private set; } = 0;
-    public double TargetAirHumidity { get; private set; } = 0;  
-    public double CurrentAirHumidity { get; private set; } = 0;
-    public double TargetSoilHumidity { get; private set; } = 0;
-    public double CurrentSoilHumidity { get; private set; } = 0;
-    
     public void BindSensorToDevice(Sensor sensor)
     {
         sensor.SetDevice(Id);

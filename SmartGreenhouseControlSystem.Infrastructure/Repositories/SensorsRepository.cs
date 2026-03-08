@@ -4,9 +4,9 @@ using SmartGreenhouseControlSystem.Application.Abstractions;
 
 namespace Infrastructure.Repositories;
 
-public class SensorsRepository(SGCSystemDbContext context) : ISensorsRepository
+public class SensorsRepository(SgcSystemDbContext context) : ISensorsRepository
 {
-    private readonly SGCSystemDbContext _context = context;
+    private readonly SgcSystemDbContext _context = context;
 
     public async Task AddAsync(Sensor sensor, CancellationToken cancellationToken = default)
     {

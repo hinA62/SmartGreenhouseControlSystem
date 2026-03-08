@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Infrastructure.Migrations
 {
-    [DbContext(typeof(SGCSystemDbContext))]
+    [DbContext(typeof(SgcSystemDbContext))]
     partial class SGCSystemDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -28,6 +28,15 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<double>("CurrentAirHumidity")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("CurrentSoilHumidity")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("CurrentTemperature")
+                        .HasColumnType("double precision");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -35,6 +44,15 @@ namespace Infrastructure.Migrations
 
                     b.Property<Guid>("SystemId")
                         .HasColumnType("uuid");
+
+                    b.Property<double>("TargetAirHumidity")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("TargetSoilHumidity")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("TargetTemperature")
+                        .HasColumnType("double precision");
 
                     b.HasKey("Id");
 

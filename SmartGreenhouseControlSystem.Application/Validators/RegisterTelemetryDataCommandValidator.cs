@@ -7,18 +7,18 @@ public class RegisterTelemetryDataCommandValidator : AbstractValidator<RegisterT
 {
     public RegisterTelemetryDataCommandValidator()
     {
-        RuleFor(x => x.DeviceId).NotNull().WithMessage("Device ID is required.");
+        RuleFor(x => x.DeviceId).NotEmpty().WithMessage("Device ID is required.");
         
-        RuleFor(x => x.Timestamp).NotNull().GreaterThan(DateTime.Now.AddMinutes(-1))
+        RuleFor(x => x.Timestamp).GreaterThan(DateTime.Now.AddMinutes(-1))
             .WithMessage("Timestamp must be greater than 1 minute ago.");
         
-        RuleFor(x => x.Temperature).NotNull().GreaterThan(-20).LessThan(35)
+        RuleFor(x => x.Temperature).InclusiveBetween(-20, 35)
             .WithMessage("Temperature must be between -20 and 35 degrees Celsius.");
         
-        RuleFor(x => x.AirHumidity).NotNull().GreaterThan(0).LessThan(100)
+        RuleFor(x => x.AirHumidity).InclusiveBetween(0, 100)
             .WithMessage("Air humidity must be between 0 and 100 percent.");
         
-        RuleFor(x => x.SoilHumidity).NotNull().GreaterThan(0).LessThan(100)
+        RuleFor(x => x.SoilHumidity).InclusiveBetween(0, 100)
             .WithMessage("Soil humidity must be between 0 and 100 percent.");
     }
 }

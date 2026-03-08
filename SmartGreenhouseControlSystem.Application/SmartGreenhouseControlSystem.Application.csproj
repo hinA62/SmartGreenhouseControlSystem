@@ -11,6 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="ChangeThresholdCommand\" />
       <Folder Include="Queries\" />
     </ItemGroup>
 

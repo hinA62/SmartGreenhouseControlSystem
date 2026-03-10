@@ -2,9 +2,9 @@
 <CoverageSession>
   <Summary numSequencePoints="251" visitedSequencePoints="57" numBranchPoints="20" visitedBranchPoints="0" sequenceCoverage="22.7" branchCoverage="0" maxCyclomaticComplexity="47" minCyclomaticComplexity="34" visitedClasses="12" numClasses="30" visitedMethods="16" numMethods="67" />
   <Modules>
-    <Module hash="35AC8B03-9775-4FED-BC4E-98BC73CFDF96">
+    <Module hash="1ABA7685-3DC8-49CD-BF79-0C286598BCF9">
       <ModulePath>SmartGreenhouseControlSystem.Application.dll</ModulePath>
-      <ModuleTime>2026-03-10T03:21:31</ModuleTime>
+      <ModuleTime>2026-03-10T03:24:00</ModuleTime>
       <ModuleName>SmartGreenhouseControlSystem.Application</ModuleName>
       <Files>
         <File uid="1" fullPath="D:\Documents\Licenta\SmartGreenhouseControlSystem\SmartGreenhouseControlSystem.Application\Validators\AddNewDeviceValidator.cs" />
@@ -726,9 +726,9 @@
         </Class>
       </Classes>
     </Module>
-    <Module hash="A733A0B4-6C94-4E08-8DE4-E3AFF313557D">
+    <Module hash="3ADDEF12-5622-4EB8-8F75-25F825E70D3C">
       <ModulePath>SmartGreenhouseControlSystem.Domain.dll</ModulePath>
-      <ModuleTime>2026-03-10T03:21:31</ModuleTime>
+      <ModuleTime>2026-03-10T03:24:00</ModuleTime>
       <ModuleName>SmartGreenhouseControlSystem.Domain</ModuleName>
       <Files>
         <File uid="22" fullPath="D:\Documents\Licenta\SmartGreenhouseControlSystem\SmartGreenhouseControlSystem.Domain\Telemetry.cs" />

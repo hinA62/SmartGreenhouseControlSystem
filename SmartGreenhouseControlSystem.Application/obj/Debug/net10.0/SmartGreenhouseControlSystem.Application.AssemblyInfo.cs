@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SmartGreenhouseControlSystem.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d001c7cd134c78a333a55621c8a8f07294b72286")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2af5a3bdcc8bd85aa63feba9c5718efdb257fd47")]
 [assembly: System.Reflection.AssemblyProductAttribute("SmartGreenhouseControlSystem.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SmartGreenhouseControlSystem.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

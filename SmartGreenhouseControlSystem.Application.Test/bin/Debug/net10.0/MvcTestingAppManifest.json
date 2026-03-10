@@ -1,0 +1,5 @@
+{
+  "SmartGreenhouseControlSystem.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "D:\\Documents\\Licenta\\SmartGreenhouseControlSystem\\SmartGreenhouseControlSystem.Application",
+  "SmartGreenhouseControlSystem.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "D:\\Documents\\Licenta\\SmartGreenhouseControlSystem\\SmartGreenhouseControlSystem.Domain",
+  "SmartGreenhouseControlSystem.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "D:\\Documents\\Licenta\\SmartGreenhouseControlSystem\\SmartGreenhouseControlSystem.Infrastructure"
+}

@@ -1,5 +1,4 @@
-﻿using AngleSharp.Css.Values;
-using Domain.Components;
+﻿using Domain.Components;
 using FluentAssertions;
 using Infrastructure.Persistence;
 using Infrastructure.Repositories;
@@ -12,14 +11,14 @@ using SmartGreenhouseControlSystem.Application.Exceptions;
 
 namespace SmartGreenhouseControlSystem.Test.IntegrationTests;
 
-public class ChangeAirHumidityCommandHandlerTests : IDisposable
+public class ChangeSoilHumidityCommandHandlerTests : IDisposable
 {
-    private readonly SgcSystemDbContext _context;
+    private readonly SgcSystemDbContext _context;   
+    private readonly ILogger<ChangeSoilHumidityCommandHandler> _logger;
+    private readonly ChangeSoilHumidityCommandHandler _handler;
     private readonly IDevicesRepository _devicesRepository;
-    private readonly ILogger<ChangeAirHumidityCommandHandler> _logger;
-    private readonly ChangeAirHumidityCommandHandler _handler;
 
-    public ChangeAirHumidityCommandHandlerTests()
+    public ChangeSoilHumidityCommandHandlerTests()
     {
         var options = new DbContextOptionsBuilder<SgcSystemDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString())
@@ -27,20 +26,20 @@ public class ChangeAirHumidityCommandHandlerTests : IDisposable
 
         _context = new SgcSystemDbContext(options);
         _devicesRepository = new DevicesRepository(_context);
-        _logger = new LoggerFactory().CreateLogger<ChangeAirHumidityCommandHandler>();
-        _handler = new ChangeAirHumidityCommandHandler(_devicesRepository, _logger);
+        _logger = new LoggerFactory().CreateLogger<ChangeSoilHumidityCommandHandler>();
+        _handler = new ChangeSoilHumidityCommandHandler(_devicesRepository, _logger);
     }
     
     [Fact]
-    public async Task Given_ValidChangeAirHumidityCommand_When_Handle_ShouldChangeAirHumidity()
+    public async Task Given_ValidChangeSoilHumidityCommand_When_Handle_ShouldChangeSoilHumidity()
     {
         // Arrange
-        var systemId = Guid.NewGuid();
-        var device = Domain.Components.Device.AddDeviceToSystem("ESP32", systemId);
+        var systemId = new Guid("345d1d13-8c66-4e25-8394-df8d773cb339");
+        var device = Device.AddDeviceToSystem("ESP32", systemId);
         _context.Devices.Add(device);
         await _context.SaveChangesAsync();
         
-        var request = new ChangeAirHumidityCommand(device.Id, 60.0);
+        var request = new ChangeSoilHumidityCommand(device.Id, 40.0);
         
         // Act
         var response = await _handler.Handle(request, CancellationToken.None);
@@ -50,9 +49,9 @@ public class ChangeAirHumidityCommandHandlerTests : IDisposable
         
         var updatedDevice = await _devicesRepository.FindDeviceAsync(device.Id);
         updatedDevice.Should().NotBeNull();
-        updatedDevice.TargetAirHumidity.Should().Be(60.0);
+        updatedDevice.TargetSoilHumidity.Should().Be(40.0);
         
-        _logger.LogInformation("Air humidity threshold successfully changed."); 
+        _logger.LogInformation("Soil humidity threshold successfully changed."); 
     }
 
     [Fact]
@@ -63,23 +62,23 @@ public class ChangeAirHumidityCommandHandlerTests : IDisposable
         var device = Device.AddDeviceToSystem("ESP32", systemId);
         _context.Devices.Add(device);
         await _context.SaveChangesAsync();
-
-        var request = new ChangeAirHumidityCommand(device.Id, -15);
+        
+        var request = new ChangeSoilHumidityCommand(device.Id, -15);
         
         // Act
         Func<Task> act = async () => await _handler.Handle(request, CancellationToken.None);
         
         // Assert
         await act.Should().ThrowAsync<ValidationErrorException>();
-        _logger.LogInformation("ChangeAirHumidityCommand validation failed.");
+        _logger.LogInformation("ChangeSoilHumidityCommand validation failed.");
     }
 
     [Fact]
-    public async Task Given_NullOrUnexistingDevice_When_Handle_ShouldThrowDeviceNotFoundException()
+    public async Task Given_NullOrNonExistingDevice_When_Handle_ShouldThrowDeviceNotFoundException()
     {
         // Arrange
         var nonExistingDeviceId = Guid.NewGuid();
-        var request = new ChangeAirHumidityCommand(nonExistingDeviceId,60.0);
+        var request = new ChangeSoilHumidityCommand(nonExistingDeviceId, 40.0);
         
         // Act
         Func<Task> act = async () => await _handler.Handle(request, CancellationToken.None);

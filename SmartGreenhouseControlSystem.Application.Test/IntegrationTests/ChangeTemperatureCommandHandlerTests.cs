@@ -1,5 +1,4 @@
-﻿using AngleSharp.Css.Values;
-using Domain.Components;
+﻿using Domain.Components;
 using FluentAssertions;
 using Infrastructure.Persistence;
 using Infrastructure.Repositories;
@@ -12,27 +11,27 @@ using SmartGreenhouseControlSystem.Application.Exceptions;
 
 namespace SmartGreenhouseControlSystem.Test.IntegrationTests;
 
-public class ChangeAirHumidityCommandHandlerTests : IDisposable
+public class ChangeTemperatureCommandHandlerTests : IDisposable
 {
-    private readonly SgcSystemDbContext _context;
+    private readonly SgcSystemDbContext _context;  
     private readonly IDevicesRepository _devicesRepository;
-    private readonly ILogger<ChangeAirHumidityCommandHandler> _logger;
-    private readonly ChangeAirHumidityCommandHandler _handler;
-
-    public ChangeAirHumidityCommandHandlerTests()
+    private readonly ILogger<ChangeTemperatureCommandHandler> _logger;
+    private readonly ChangeTemperatureCommandHandler _handler;
+    
+    public ChangeTemperatureCommandHandlerTests()
     {
         var options = new DbContextOptionsBuilder<SgcSystemDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options;
-
+        
         _context = new SgcSystemDbContext(options);
         _devicesRepository = new DevicesRepository(_context);
-        _logger = new LoggerFactory().CreateLogger<ChangeAirHumidityCommandHandler>();
-        _handler = new ChangeAirHumidityCommandHandler(_devicesRepository, _logger);
+        _logger = new LoggerFactory().CreateLogger<ChangeTemperatureCommandHandler>();
+        _handler = new ChangeTemperatureCommandHandler(_devicesRepository, _logger);
     }
-    
+
     [Fact]
-    public async Task Given_ValidChangeAirHumidityCommand_When_Handle_ShouldChangeAirHumidity()
+    public async Task Given_ValidChangeTemperatureCommand_When_Handle_ShouldChangeTemperature()
     {
         // Arrange
         var systemId = Guid.NewGuid();
@@ -40,7 +39,7 @@ public class ChangeAirHumidityCommandHandlerTests : IDisposable
         _context.Devices.Add(device);
         await _context.SaveChangesAsync();
         
-        var request = new ChangeAirHumidityCommand(device.Id, 60.0);
+        var request = new ChangeTemperatureCommand(device.Id, 25.0);
         
         // Act
         var response = await _handler.Handle(request, CancellationToken.None);
@@ -50,9 +49,9 @@ public class ChangeAirHumidityCommandHandlerTests : IDisposable
         
         var updatedDevice = await _devicesRepository.FindDeviceAsync(device.Id);
         updatedDevice.Should().NotBeNull();
-        updatedDevice.TargetAirHumidity.Should().Be(60.0);
+        updatedDevice.TargetTemperature.Should().Be(25.0);
         
-        _logger.LogInformation("Air humidity threshold successfully changed."); 
+        _logger.LogInformation("Temperature threshold successfully changed.");
     }
 
     [Fact]
@@ -63,23 +62,23 @@ public class ChangeAirHumidityCommandHandlerTests : IDisposable
         var device = Device.AddDeviceToSystem("ESP32", systemId);
         _context.Devices.Add(device);
         await _context.SaveChangesAsync();
-
-        var request = new ChangeAirHumidityCommand(device.Id, -15);
+        
+        var request = new ChangeTemperatureCommand(device.Id, 70.3);
         
         // Act
         Func<Task> act = async () => await _handler.Handle(request, CancellationToken.None);
         
-        // Assert
+        // Asset
         await act.Should().ThrowAsync<ValidationErrorException>();
-        _logger.LogInformation("ChangeAirHumidityCommand validation failed.");
+        _logger.LogInformation("ChangeTemperatureCommand validation failed.");
     }
 
     [Fact]
-    public async Task Given_NullOrUnexistingDevice_When_Handle_ShouldThrowDeviceNotFoundException()
+    public async Task Given_NullOrNonexistingDevice_When_Handle_ShouldThrowDeviceNotFoundException()
     {
         // Arrange
         var nonExistingDeviceId = Guid.NewGuid();
-        var request = new ChangeAirHumidityCommand(nonExistingDeviceId,60.0);
+        var request = new ChangeTemperatureCommand(nonExistingDeviceId, 25.0);
         
         // Act
         Func<Task> act = async () => await _handler.Handle(request, CancellationToken.None);

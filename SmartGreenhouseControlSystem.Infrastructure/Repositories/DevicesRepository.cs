@@ -1,39 +1,45 @@
 ﻿using Domain;
 using Domain.Components;
 using Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 using SmartGreenhouseControlSystem.Application.Abstractions;
 
 namespace Infrastructure.Repositories;
 
 public class DevicesRepository(SgcSystemDbContext context) : IDevicesRepository
 {
-    private readonly SgcSystemDbContext _context = context;
-
-    
     public async Task AddDeviceAsync(Device device, CancellationToken cancellationToken = default)
     {
-        await _context.Devices.AddAsync(device, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+        await context.Devices.AddAsync(device, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
     }
 
     public async Task<Device?> FindDeviceAsync(Guid deviceId, CancellationToken cancellationToken = default)
     {
-        return await _context.Devices.FindAsync([deviceId], cancellationToken);
+        return await context.Devices.FindAsync([deviceId], cancellationToken);
     }
 
     public IQueryable<Device> GetAllDevices()
     {
-        return _context.Devices.AsQueryable();
+        return context.Devices.AsQueryable();
     }
 
     public Task AddTelemetryAsync(Telemetry telemetry, CancellationToken cancellationToken = default)
     {
-        _context.Telemetries.Add(telemetry);
-        return _context.SaveChangesAsync(cancellationToken);
+        context.Telemetries.Add(telemetry);
+        return context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<Telemetry?> GetLatestTelemetryAsync(Guid deviceId, CancellationToken cancellationToken)
+    {
+        var orderByDescending = context.Telemetries.Where(
+            t => t.DeviceId == deviceId).OrderByDescending(t => t.Timestamp);
+        
+        return await orderByDescending.FirstOrDefaultAsync(cancellationToken);
     }
 
     public Task SaveChangesAsync(CancellationToken cancellationToken)
     {
-        return _context.SaveChangesAsync(cancellationToken);
+        return context.SaveChangesAsync(cancellationToken);
     }
 }

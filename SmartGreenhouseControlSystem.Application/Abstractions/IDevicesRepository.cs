@@ -11,4 +11,5 @@ public interface IDevicesRepository
     
     Task AddTelemetryAsync(Telemetry telemetry, CancellationToken cancellationToken = default);
     Task SaveChangesAsync(CancellationToken cancellationToken);
+    Task<Telemetry?> GetLatestTelemetryAsync(Guid deviceId, CancellationToken none);
 }

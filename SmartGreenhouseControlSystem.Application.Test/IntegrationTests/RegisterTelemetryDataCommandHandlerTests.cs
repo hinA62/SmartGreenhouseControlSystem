@@ -1,25 +1,23 @@
-﻿using AngleSharp.Css.Values;
-using Domain.Components;
+﻿using Domain.Components;
 using FluentAssertions;
 using Infrastructure.Persistence;
 using Infrastructure.Repositories;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SmartGreenhouseControlSystem.Application.Abstractions;
-using SmartGreenhouseControlSystem.Application.Commands.ChangeThresholdCommand;
+using SmartGreenhouseControlSystem.Application.Commands.RegisterTelemetryDataCommand;
 using SmartGreenhouseControlSystem.Application.Exceptions;
 
 namespace SmartGreenhouseControlSystem.Test.IntegrationTests;
 
-public class ChangeAirHumidityCommandHandlerTests : IDisposable
+public class RegisterTelemetryDataCommandHandlerTests : IDisposable
 {
     private readonly SgcSystemDbContext _context;
+    private readonly ILogger<RegisterTelemetryDataCommandHandler> _logger;
+    private readonly RegisterTelemetryDataCommandHandler _handler;
     private readonly IDevicesRepository _devicesRepository;
-    private readonly ILogger<ChangeAirHumidityCommandHandler> _logger;
-    private readonly ChangeAirHumidityCommandHandler _handler;
 
-    public ChangeAirHumidityCommandHandlerTests()
+    public RegisterTelemetryDataCommandHandlerTests()
     {
         var options = new DbContextOptionsBuilder<SgcSystemDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString())
@@ -27,12 +25,43 @@ public class ChangeAirHumidityCommandHandlerTests : IDisposable
 
         _context = new SgcSystemDbContext(options);
         _devicesRepository = new DevicesRepository(_context);
-        _logger = new LoggerFactory().CreateLogger<ChangeAirHumidityCommandHandler>();
-        _handler = new ChangeAirHumidityCommandHandler(_devicesRepository, _logger);
+        _logger = new LoggerFactory().CreateLogger<RegisterTelemetryDataCommandHandler>();
+        _handler = new RegisterTelemetryDataCommandHandler(_devicesRepository, _logger);
     }
     
     [Fact]
-    public async Task Given_ValidChangeAirHumidityCommand_When_Handle_ShouldChangeAirHumidity()
+    public async Task Given_ValidRegisterTelemetryDataCommand_When_Handle_ShouldRegisterTelemetryData()
+    {
+        // Arrange
+        var systemId = new Guid("345d1d13-8c66-4e25-8394-df8d773cb339");
+        var device = Device.AddDeviceToSystem("ESP32", systemId);
+        _context.Devices.Add(device);
+        await _context.SaveChangesAsync();
+        
+        var request = new RegisterTelemetryDataCommand(
+            device.Id, 
+            DateTime.Now, 
+            25.0, 
+            60.0, 
+            40.0);
+        
+        // Act
+        var response = await _handler.Handle(request, CancellationToken.None);
+        
+        // Assert
+        response.Should().NotBeEmpty();
+        
+        var telemetry = await _devicesRepository.GetLatestTelemetryAsync(device.Id, CancellationToken.None);
+        telemetry.Should().NotBeNull();
+        telemetry.Temperature.Should().Be(25.0);
+        telemetry.AirHumidity.Should().Be(60.0);
+        telemetry.SoilHumidity.Should().Be(40.0);
+        
+        _logger.LogInformation("Telemetry data successfully registered.");
+    }
+
+    [Fact]
+    public async Task Given_ValidationError_When_Handle_ShouldThrowValidationErrorException()
     {
         // Arrange
         var systemId = Guid.NewGuid();
@@ -40,46 +69,27 @@ public class ChangeAirHumidityCommandHandlerTests : IDisposable
         _context.Devices.Add(device);
         await _context.SaveChangesAsync();
         
-        var request = new ChangeAirHumidityCommand(device.Id, 60.0);
-        
-        // Act
-        var response = await _handler.Handle(request, CancellationToken.None);
-        
-        // Assert
-        response.Should().Be(Unit.Value);
-        
-        var updatedDevice = await _devicesRepository.FindDeviceAsync(device.Id);
-        updatedDevice.Should().NotBeNull();
-        updatedDevice.TargetAirHumidity.Should().Be(60.0);
-        
-        _logger.LogInformation("Air humidity threshold successfully changed."); 
-    }
-
-    [Fact]
-    public async Task Given_ValidationError_When_Handle_ShouldThrowValidationErrorException()
-    {
-        // Arrange
-        var systemId = new Guid("345d1d13-8c66-4e25-8394-df8d773cb339");
-        var device = Device.AddDeviceToSystem("ESP32", systemId);
-        _context.Devices.Add(device);
-        await _context.SaveChangesAsync();
-
-        var request = new ChangeAirHumidityCommand(device.Id, -15);
+        var request = new RegisterTelemetryDataCommand(
+            device.Id, 
+            DateTime.UtcNow, 
+            -100.0,
+            60.0, 
+            40.0);
         
         // Act
         Func<Task> act = async () => await _handler.Handle(request, CancellationToken.None);
         
         // Assert
         await act.Should().ThrowAsync<ValidationErrorException>();
-        _logger.LogInformation("ChangeAirHumidityCommand validation failed.");
+        _logger.LogInformation("RegisterTelemetryDataCommand validation failed.");
     }
-
+    
     [Fact]
-    public async Task Given_NullOrUnexistingDevice_When_Handle_ShouldThrowDeviceNotFoundException()
+    public async Task Given_NullOrNonExistingDevice_When_Handle_ShouldThrowDeviceNotFoundException()
     {
         // Arrange
         var nonExistingDeviceId = Guid.NewGuid();
-        var request = new ChangeAirHumidityCommand(nonExistingDeviceId,60.0);
+        var request = new RegisterTelemetryDataCommand(nonExistingDeviceId, DateTime.Now, 25.0, 60.0, 40.0);
         
         // Act
         Func<Task> act = async () => await _handler.Handle(request, CancellationToken.None);

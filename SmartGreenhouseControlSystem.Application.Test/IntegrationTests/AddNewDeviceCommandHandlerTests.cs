@@ -20,7 +20,7 @@ public class AddNewDeviceCommandHandlerTests : IDisposable
     public AddNewDeviceCommandHandlerTests()
     {
         var options = new DbContextOptionsBuilder<SgcSystemDbContext>()
-            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+            .UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options;
 
         _context = new SgcSystemDbContext(options);
